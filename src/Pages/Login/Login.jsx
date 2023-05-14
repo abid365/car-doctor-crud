@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import img from "../../../src/assets/images/login/login.svg";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/Authprovider";
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
+
   const handleLogIn = (event) => {
     event.preventDefault();
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+    signIn(email, email)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -54,7 +70,7 @@ const Login = () => {
             </form>
             <p className="font-bold text-center my-3">
               Dont have an account?{" "}
-              <Link className="text-orange-600 font-bold" to="signup">
+              <Link className="text-orange-600 font-bold" to="/signup">
                 Sign Up
               </Link>
             </p>
