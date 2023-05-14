@@ -2,8 +2,8 @@ import React from "react";
 import img from "../../../src/assets/images/login/login.svg";
 import { Link } from "react-router-dom";
 
-const Login = () => {
-  const handleLogIn = (event) => {
+const SignUp = () => {
+  const handleSignUp = (event) => {
     event.preventDefault();
   };
   return (
@@ -14,9 +14,9 @@ const Login = () => {
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <div className="card-body">
-            <h1 className="text-3xl font-bold text-center">Login now!</h1>
+            <h1 className="text-3xl font-bold text-center">Sign Up!</h1>
             {/* form control use an arrow function to manupalate form data */}
-            <form onSubmit={handleLogIn}>
+            <form onSubmit={handleSignUp}>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -26,6 +26,17 @@ const Login = () => {
                   placeholder="email"
                   className="input input-bordered"
                   name="email"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className="input input-bordered"
+                  name="name"
                 />
               </div>
               <div className="form-control">
@@ -48,14 +59,14 @@ const Login = () => {
                 <input
                   className="btn btn-primary"
                   type="submit"
-                  value="login"
+                  value="Sign Up"
                 />
               </div>
             </form>
             <p className="font-bold text-center my-3">
-              Dont have an account?{" "}
-              <Link className="text-orange-600 font-bold" to="signup">
-                Sign Up
+              Already Have an account?{" "}
+              <Link className="text-orange-600 font-bold" to="login">
+                Log In
               </Link>
             </p>
           </div>
@@ -65,4 +76,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
