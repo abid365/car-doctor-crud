@@ -6,7 +6,9 @@ const NaviBar = () => {
   const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        localStorage.removeItem("carDoc-access-token");
+      })
       .catch((error) => console.log(error));
   };
 

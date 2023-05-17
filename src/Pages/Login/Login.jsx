@@ -1,10 +1,14 @@
 import React, { useContext } from "react";
 import img from "../../../src/assets/images/login/login.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/Authprovider";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || "/";
 
   const handleLogIn = (event) => {
     event.preventDefault();
@@ -13,14 +17,33 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
+
     signIn(email, password)
       .then((result) => {
         const user = result.user;
         console.log(user);
+        const loggedUser = {
+          email: user.email,
+        };
+        console.log(loggedUser);
+
+        // hitting to jwt api
+        fetch(`http://localhost:5000/jwt`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(loggedUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("jwt token:", data);
+            // Warning: Local storage is not the best place ( second best) to store jwt token
+            localStorage.setItem("carDoc-access-token", data.token);
+            navigate(from, { replace: true });
+          });
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -49,7 +72,7 @@ const Login = () => {
                   <span className="label-text">Password</span>
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="password"
                   className="input input-bordered"
                   name="password"
